@@ -6,13 +6,16 @@ export interface ShoppingItem {
   'id' : bigint,
   'completed' : boolean,
   'description' : string,
+  'emoji' : string,
+  'inCart' : boolean,
 }
 export interface _SERVICE {
-  'addItem' : ActorMethod<[string], bigint>,
+  'addItem' : ActorMethod<[string, string], bigint>,
   'deleteItem' : ActorMethod<[bigint], boolean>,
   'getItems' : ActorMethod<[], Array<ShoppingItem>>,
   'initialize' : ActorMethod<[], undefined>,
-  'toggleItem' : ActorMethod<[bigint], boolean>,
+  'toggleCompleted' : ActorMethod<[bigint], boolean>,
+  'toggleInCart' : ActorMethod<[bigint], boolean>,
 }
 export declare const idlFactory: IDL.InterfaceFactory;
 export declare const init: (args: { IDL: typeof IDL }) => IDL.Type[];

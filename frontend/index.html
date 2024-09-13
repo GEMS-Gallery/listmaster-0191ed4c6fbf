@@ -8,7 +8,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            max-width: 600px;
+            max-width: 800px;
             margin: 0 auto;
             padding: 20px;
             background-color: #f0f0f0;
@@ -23,28 +23,12 @@
             padding: 20px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        #new-item {
+        #items-container {
             display: flex;
-            margin-bottom: 20px;
+            justify-content: space-between;
         }
-        #new-item input {
-            flex-grow: 1;
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #ddd;
-            border-radius: 4px 0 0 4px;
-        }
-        #new-item button {
-            padding: 10px 15px;
-            font-size: 16px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 0 4px 4px 0;
-            cursor: pointer;
-        }
-        #new-item button:hover {
-            background-color: #45a049;
+        #available-items, #cart-items {
+            width: 48%;
         }
         ul {
             list-style-type: none;
@@ -55,6 +39,7 @@
             align-items: center;
             padding: 10px;
             border-bottom: 1px solid #eee;
+            cursor: pointer;
         }
         li:last-child {
             border-bottom: none;
@@ -78,16 +63,25 @@
         li button:hover {
             color: #333;
         }
+        .emoji {
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
     </style>
 </head>
 <body>
     <div id="app">
         <h1>Shopping List</h1>
-        <div id="new-item">
-            <input type="text" id="item-input" placeholder="Enter a new item">
-            <button id="add-item"><i class="fas fa-plus"></i> Add</button>
+        <div id="items-container">
+            <div id="available-items">
+                <h2>Available Items</h2>
+                <ul id="available-list"></ul>
+            </div>
+            <div id="cart-items">
+                <h2>Cart</h2>
+                <ul id="cart-list"></ul>
+            </div>
         </div>
-        <ul id="shopping-list"></ul>
     </div>
     <script type="module" src="index.js"></script>
 </body>
