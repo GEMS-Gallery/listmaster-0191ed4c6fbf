@@ -4,6 +4,7 @@ const availableCategories = document.getElementById('available-categories');
 const cartList = document.getElementById('cart-list');
 const notification = document.getElementById('notification');
 const viewToggle = document.getElementById('view-toggle');
+const cartCount = document.getElementById('cart-count');
 
 let currentView = 'list';
 
@@ -14,6 +15,7 @@ async function loadItems() {
     
     renderAvailableItems(groupItemsByCategory(availableItems));
     renderCartItems(cartItems);
+    updateCartCount(cartItems.length);
 }
 
 function groupItemsByCategory(items) {
@@ -156,6 +158,10 @@ function showNotification(message) {
 function setView(view) {
     currentView = view;
     loadItems();
+}
+
+function updateCartCount(count) {
+    cartCount.textContent = count;
 }
 
 viewToggle.addEventListener('change', (e) => {
