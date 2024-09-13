@@ -57,5 +57,8 @@ itemInput.addEventListener('keypress', async (e) => {
     }
 });
 
-// Initial load
-loadItems();
+// Initialize predefined items and load the list
+(async () => {
+    await backend.initialize();
+    await loadItems();
+})();

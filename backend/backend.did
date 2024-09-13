@@ -8,5 +8,6 @@ service : {
   addItem: (text) -> (nat);
   deleteItem: (nat) -> (bool);
   getItems: () -> (vec ShoppingItem) query;
+  initialize: () -> ();
   toggleItem: (nat) -> (bool);
 }

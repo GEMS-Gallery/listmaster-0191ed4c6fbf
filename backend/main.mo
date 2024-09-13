@@ -1,5 +1,4 @@
 import Bool "mo:base/Bool";
-import Func "mo:base/Func";
 import List "mo:base/List";
 import Text "mo:base/Text";
 
@@ -10,18 +9,29 @@ import Nat "mo:base/Nat";
 import Option "mo:base/Option";
 
 actor {
-  // Define the structure for a shopping list item
   public type ShoppingItem = {
     id: Nat;
     description: Text;
     completed: Bool;
   };
 
-  // Stable variable to store the shopping list items
   stable var shoppingList: [ShoppingItem] = [];
   stable var nextId: Nat = 0;
 
-  // Function to add a new item to the shopping list
+  // Predefined items
+  let predefinedItems: [Text] = [
+    "Apples", "Bananas", "Carrots", "Bread", "Milk", "Eggs", "Cheese",
+    "Chicken", "Pasta", "Tomatoes", "Onions", "Potatoes", "Cereal", "Coffee"
+  ];
+
+  public func initialize() : async () {
+    if (shoppingList.size() == 0) {
+      for (item in predefinedItems.vals()) {
+        ignore await addItem(item);
+      };
+    };
+  };
+
   public func addItem(description: Text) : async Nat {
     let id = nextId;
     nextId += 1;
@@ -35,12 +45,10 @@ actor {
     id
   };
 
-  // Function to get all items in the shopping list
   public query func getItems() : async [ShoppingItem] {
     shoppingList
   };
 
-  // Function to toggle the completion status of an item
   public func toggleItem(id: Nat) : async Bool {
     let index = Array.indexOf<ShoppingItem>({ id; description = ""; completed = false }, shoppingList, func(a, b) { a.id == b.id });
     switch (index) {
@@ -61,7 +69,6 @@ actor {
     }
   };
 
-  // Function to delete an item from the shopping list
   public func deleteItem(id: Nat) : async Bool {
     let newList = Array.filter(shoppingList, func(item: ShoppingItem) : Bool { item.id != id });
     if (newList.size() < shoppingList.size()) {
