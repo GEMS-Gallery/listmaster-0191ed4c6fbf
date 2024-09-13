@@ -3,8 +3,7 @@ import { backend } from 'declarations/backend';
 const availableCategories = document.getElementById('available-categories');
 const cartList = document.getElementById('cart-list');
 const notification = document.getElementById('notification');
-const listViewBtn = document.getElementById('list-view-btn');
-const gridViewBtn = document.getElementById('grid-view-btn');
+const viewToggle = document.getElementById('view-toggle');
 
 let currentView = 'list';
 
@@ -156,18 +155,12 @@ function showNotification(message) {
 
 function setView(view) {
     currentView = view;
-    if (view === 'list') {
-        listViewBtn.classList.add('active');
-        gridViewBtn.classList.remove('active');
-    } else {
-        gridViewBtn.classList.add('active');
-        listViewBtn.classList.remove('active');
-    }
     loadItems();
 }
 
-listViewBtn.addEventListener('click', () => setView('list'));
-gridViewBtn.addEventListener('click', () => setView('grid'));
+viewToggle.addEventListener('change', (e) => {
+    setView(e.target.checked ? 'grid' : 'list');
+});
 
 // Initialize predefined items and load the list
 (async () => {
