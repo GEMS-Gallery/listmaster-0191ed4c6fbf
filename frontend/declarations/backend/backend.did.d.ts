@@ -8,9 +8,10 @@ export interface ShoppingItem {
   'description' : string,
   'emoji' : string,
   'inCart' : boolean,
+  'category' : string,
 }
 export interface _SERVICE {
-  'addItem' : ActorMethod<[string, string], bigint>,
+  'addItem' : ActorMethod<[string, string, string], bigint>,
   'deleteItem' : ActorMethod<[bigint], boolean>,
   'getItems' : ActorMethod<[], Array<ShoppingItem>>,
   'initialize' : ActorMethod<[], undefined>,

@@ -1,5 +1,6 @@
 type ShoppingItem = 
  record {
+   category: text;
    completed: bool;
    description: text;
    emoji: text;
@@ -7,7 +8,7 @@ type ShoppingItem =
    inCart: bool;
  };
 service : {
-  addItem: (text, text) -> (nat);
+  addItem: (text, text, text) -> (nat);
   deleteItem: (nat) -> (bool);
   getItems: () -> (vec ShoppingItem) query;
   initialize: () -> ();

@@ -1,18 +1,42 @@
 import { backend } from 'declarations/backend';
 
-const availableList = document.getElementById('available-list');
-const cartList = document.getElementById('cart-list');
+const availableCategories = document.getElementById('available-categories');
+const cartCategories = document.getElementById('cart-categories');
 
 async function loadItems() {
     const items = await backend.getItems();
-    availableList.innerHTML = '';
-    cartList.innerHTML = '';
+    const groupedItems = groupItemsByCategory(items);
+    
+    renderItems(groupedItems, availableCategories, false);
+    renderItems(groupedItems, cartCategories, true);
+}
+
+function groupItemsByCategory(items) {
+    const grouped = {};
     items.forEach(item => {
-        const li = createListItem(item);
-        if (item.inCart) {
-            cartList.appendChild(li);
-        } else {
-            availableList.appendChild(li);
+        if (!grouped[item.category]) {
+            grouped[item.category] = [];
+        }
+        grouped[item.category].push(item);
+    });
+    return grouped;
+}
+
+function renderItems(groupedItems, container, inCart) {
+    container.innerHTML = '';
+    Object.entries(groupedItems).forEach(([category, items]) => {
+        const categoryItems = items.filter(item => item.inCart === inCart);
+        if (categoryItems.length > 0) {
+            const categoryDiv = document.createElement('div');
+            categoryDiv.className = 'category';
+            categoryDiv.innerHTML = `<div class="category-title">${category}</div>`;
+            const ul = document.createElement('ul');
+            categoryItems.forEach(item => {
+                const li = createListItem(item);
+                ul.appendChild(li);
+            });
+            categoryDiv.appendChild(ul);
+            container.appendChild(categoryDiv);
         }
     });
 }

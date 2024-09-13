@@ -5,9 +5,10 @@ export const idlFactory = ({ IDL }) => {
     'description' : IDL.Text,
     'emoji' : IDL.Text,
     'inCart' : IDL.Bool,
+    'category' : IDL.Text,
   });
   return IDL.Service({
-    'addItem' : IDL.Func([IDL.Text, IDL.Text], [IDL.Nat], []),
+    'addItem' : IDL.Func([IDL.Text, IDL.Text, IDL.Text], [IDL.Nat], []),
     'deleteItem' : IDL.Func([IDL.Nat], [IDL.Bool], []),
     'getItems' : IDL.Func([], [IDL.Vec(ShoppingItem)], ['query']),
     'initialize' : IDL.Func([], [], []),
