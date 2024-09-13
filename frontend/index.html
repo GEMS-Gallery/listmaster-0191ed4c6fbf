@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping List App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        #app {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        #new-item {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        #new-item input {
+            flex-grow: 1;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px 0 0 4px;
+        }
+        #new-item button {
+            padding: 10px 15px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+        #new-item button:hover {
+            background-color: #45a049;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        li:last-child {
+            border-bottom: none;
+        }
+        li.completed span {
+            text-decoration: line-through;
+            color: #888;
+        }
+        li span {
+            flex-grow: 1;
+            margin-right: 10px;
+        }
+        li button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            color: #888;
+            transition: color 0.3s;
+        }
+        li button:hover {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h1>Shopping List</h1>
+        <div id="new-item">
+            <input type="text" id="item-input" placeholder="Enter a new item">
+            <button id="add-item"><i class="fas fa-plus"></i> Add</button>
+        </div>
+        <ul id="shopping-list"></ul>
+    </div>
+    <script type="module" src="index.js"></script>
+</body>
+</html>
