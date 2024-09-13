@@ -1,14 +1,15 @@
 import { backend } from 'declarations/backend';
 
 const availableCategories = document.getElementById('available-categories');
-const cartCategories = document.getElementById('cart-categories');
+const cartList = document.getElementById('cart-list');
 
 async function loadItems() {
     const items = await backend.getItems();
-    const groupedItems = groupItemsByCategory(items);
+    const availableItems = items.filter(item => !item.inCart);
+    const cartItems = items.filter(item => item.inCart);
     
-    renderItems(groupedItems, availableCategories, false);
-    renderItems(groupedItems, cartCategories, true);
+    renderAvailableItems(groupItemsByCategory(availableItems));
+    renderCartItems(cartItems);
 }
 
 function groupItemsByCategory(items) {
@@ -22,22 +23,27 @@ function groupItemsByCategory(items) {
     return grouped;
 }
 
-function renderItems(groupedItems, container, inCart) {
-    container.innerHTML = '';
+function renderAvailableItems(groupedItems) {
+    availableCategories.innerHTML = '';
     Object.entries(groupedItems).forEach(([category, items]) => {
-        const categoryItems = items.filter(item => item.inCart === inCart);
-        if (categoryItems.length > 0) {
-            const categoryDiv = document.createElement('div');
-            categoryDiv.className = 'category';
-            categoryDiv.innerHTML = `<div class="category-title">${category}</div>`;
-            const ul = document.createElement('ul');
-            categoryItems.forEach(item => {
-                const li = createListItem(item);
-                ul.appendChild(li);
-            });
-            categoryDiv.appendChild(ul);
-            container.appendChild(categoryDiv);
-        }
+        const categoryDiv = document.createElement('div');
+        categoryDiv.className = 'category';
+        categoryDiv.innerHTML = `<div class="category-title">${category}</div>`;
+        const ul = document.createElement('ul');
+        items.forEach(item => {
+            const li = createListItem(item);
+            ul.appendChild(li);
+        });
+        categoryDiv.appendChild(ul);
+        availableCategories.appendChild(categoryDiv);
+    });
+}
+
+function renderCartItems(items) {
+    cartList.innerHTML = '';
+    items.forEach(item => {
+        const li = createListItem(item);
+        cartList.appendChild(li);
     });
 }
 
