@@ -2,6 +2,7 @@ import { backend } from 'declarations/backend';
 
 const availableCategories = document.getElementById('available-categories');
 const cartList = document.getElementById('cart-list');
+const notification = document.getElementById('notification');
 
 async function loadItems() {
     const items = await backend.getItems();
@@ -62,24 +63,46 @@ function createListItem(item) {
         const toggleButton = li.querySelector('.toggle');
         toggleButton.addEventListener('click', async (e) => {
             e.stopPropagation();
-            await backend.toggleCompleted(item.id);
-            await loadItems();
+            await handleAction(() => backend.toggleCompleted(item.id), `Marked "${item.description}" as ${item.completed ? 'incomplete' : 'complete'}`);
         });
 
         const deleteButton = li.querySelector('.delete');
         deleteButton.addEventListener('click', async (e) => {
             e.stopPropagation();
-            await backend.deleteItem(item.id);
-            await loadItems();
+            await handleAction(() => backend.deleteItem(item.id), `Deleted "${item.description}" from cart`);
         });
     }
 
     li.addEventListener('click', async () => {
-        await backend.toggleInCart(item.id);
-        await loadItems();
+        await handleAction(() => backend.toggleInCart(item.id), `${item.inCart ? 'Removed' : 'Added'} "${item.description}" ${item.inCart ? 'from' : 'to'} cart`);
     });
 
     return li;
+}
+
+async function handleAction(action, message) {
+    try {
+        const element = event.currentTarget;
+        element.style.pointerEvents = 'none';
+        await action();
+        showNotification(message);
+        await loadItems();
+    } catch (error) {
+        console.error('Error:', error);
+        showNotification('An error occurred. Please try again.');
+    } finally {
+        setTimeout(() => {
+            if (element) element.style.pointerEvents = 'auto';
+        }, 1000);
+    }
+}
+
+function showNotification(message) {
+    notification.textContent = message;
+    notification.style.display = 'block';
+    setTimeout(() => {
+        notification.style.display = 'none';
+    }, 3000);
 }
 
 // Initialize predefined items and load the list
